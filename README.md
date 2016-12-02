@@ -1,0 +1,2 @@
+# pamotohp-gd-manager
+init
