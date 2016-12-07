@@ -6,7 +6,7 @@
 
     <groupId>org.tapaha</groupId>
     <artifactId>pamotohp-gd-manager</artifactId>
-    <version>0.7</version>
+    <version>0.9</version>
     <packaging>jar</packaging>
 
     <name>pamotohp-gd-manager</name>

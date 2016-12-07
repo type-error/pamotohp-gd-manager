@@ -65,7 +65,7 @@ public class PamotohpGdManager {
         return file;
     }
 
-    public static ByteArrayOutputStream getBufferedImage(String id, int w, int h, int rotation) throws IOException {
+    public static ByteArrayOutputStream getBufferedImage(String id, double width, double height, int originalWidth, int originalHeight, int rotation) throws IOException {
         Drive service = DriveService.getDriveService();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ByteArrayOutputStream outputStream2 = new ByteArrayOutputStream();
@@ -73,14 +73,16 @@ public class PamotohpGdManager {
         service.files().get(id).executeMediaAndDownloadTo(outputStream);
 
         if(rotation == 1) {
-            Thumbnails.of(ImageIO.read(new ByteArrayInputStream(outputStream.toByteArray())))
-                    .size(w, h)
+           Thumbnails.of(ImageIO.read(new ByteArrayInputStream(outputStream.toByteArray())))
+                    .scale(height / originalHeight < 1 ? height / originalHeight : 1)
+                    //.size(width, height)
                     .rotate(90)
                     .outputFormat("jpg")
                     .toOutputStream(outputStream2);
         } else {
             Thumbnails.of(ImageIO.read(new ByteArrayInputStream(outputStream.toByteArray())))
-                    .size(w, h)
+                    .scale(width / originalWidth < 1 ? width / originalWidth : 1)
+                    //.size(width, height)
                     .outputFormat("jpg")
                     .toOutputStream(outputStream2);
         }
