@@ -66,22 +66,46 @@ public class PamotohpGdManager {
     }
 
     public static ByteArrayOutputStream getBufferedImage(String id, double width, double height, int originalWidth, int originalHeight, int rotation) throws IOException {
+    //public static ByteArrayOutputStream getBufferedImage(String id, int rotation) throws IOException {
         Drive service = DriveService.getDriveService();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ByteArrayOutputStream outputStream2 = new ByteArrayOutputStream();
 
         service.files().get(id).executeMediaAndDownloadTo(outputStream);
+        double v = 0;
+        double temp = 0;
+        int temp_d = 0;
 
         if(rotation == 1) {
+            temp = height;
+            height = width;
+            width = temp;
+
+            temp_d = originalHeight;
+            originalHeight = originalWidth;
+            originalWidth = temp_d;
+
+            if(originalWidth > originalHeight) {
+                v = width / originalWidth < 1 ? width / originalWidth : 1;
+            } else {
+                v = height / originalHeight < 1 ? height / originalHeight : 1;
+            }
+
            Thumbnails.of(ImageIO.read(new ByteArrayInputStream(outputStream.toByteArray())))
-                    .scale(height / originalHeight < 1 ? height / originalHeight : 1)
+                    .scale(v)
                     //.size(width, height)
                     .rotate(90)
                     .outputFormat("jpg")
                     .toOutputStream(outputStream2);
         } else {
+            if(originalWidth > originalHeight) {
+                v = width / originalWidth < 1 ? width / originalWidth : 1;
+            } else {
+                v = height / originalHeight < 1 ? height / originalHeight : 1;
+            }
+
             Thumbnails.of(ImageIO.read(new ByteArrayInputStream(outputStream.toByteArray())))
-                    .scale(width / originalWidth < 1 ? width / originalWidth : 1)
+                    .scale(v)
                     //.size(width, height)
                     .outputFormat("jpg")
                     .toOutputStream(outputStream2);
