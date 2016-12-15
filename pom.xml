@@ -6,7 +6,7 @@
 
     <groupId>org.tapaha</groupId>
     <artifactId>pamotohp-gd-manager</artifactId>
-    <version>1.7</version>
+    <version>1.8</version>
     <packaging>jar</packaging>
 
     <name>pamotohp-gd-manager</name>
@@ -29,6 +29,12 @@
             <groupId>com.google.api-client</groupId>
             <artifactId>google-api-client</artifactId>
             <version>1.22.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava-jdk5</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
